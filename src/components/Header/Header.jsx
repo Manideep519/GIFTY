@@ -14,7 +14,7 @@ import {
 import { useDisclosure } from "@mantine/hooks";
 import Logo from "../Utlity/Logo";
 import { Link } from "react-router-dom";
-import { LoggedInMenu } from "./LoggedInMenu";
+import LoggedInMenu from "./LoggedInMenu";
 
 const useStyles = createStyles((theme) => ({
   link: {

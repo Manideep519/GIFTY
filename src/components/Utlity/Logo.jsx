@@ -1,15 +1,16 @@
-import { Anchor } from "@mantine/core";
+import { Title } from "@mantine/core";
+import CustomLink from "./CustomLink";
 
 export default function Logo() {
   return (
-    <Anchor
-      sx={{
+    <CustomLink
+      styles={{
         fontSize: "40px",
       }}
       underline={false}
       href="/"
     >
-      MERA
-    </Anchor>
+      <Title>MERA</Title>
+    </CustomLink>
   );
 }

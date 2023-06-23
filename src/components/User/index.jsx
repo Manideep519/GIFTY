@@ -1,45 +1,32 @@
 import { useState } from "react";
-import { Box, Container, Tabs } from "@mantine/core";
+import { Box, Container } from "@mantine/core";
 import UserProfile from "./UserProfile";
 import UserSaved from "./UserSaved";
 import UserSettings from "./UserSettings";
+import UserDashboard from "./UserDashboard";
+import UserActivity from "./UserActivity";
+import { UserOrders } from "./UserOrders";
 
 export default function User() {
-  const [activeTab, setActiveTab] = useState("userProfile");
+  const [active, setActive] = useState("Profile");
+
   return (
     <Box>
-      <Container size={"xl"}>
-        <Tabs
-          value={activeTab}
-          onTabChange={setActiveTab}
-          defaultValue="userProfile"
-          orientation="vertical"
-          sx={{
-            "& .mantine-Tabs-tab": {
-              padding: "16px 10px",
-            },
-            "& .mantine-Tabs-panel": {
-              minHeight: "500px",
-            },
-          }}
-          radius={"md"}
-        >
-          <Tabs.List>
-            <Tabs.Tab value="userProfile">Profile</Tabs.Tab>
-            <Tabs.Tab value="userActivity">User Activity</Tabs.Tab>
-
-            <Tabs.Tab value="settings">Settings</Tabs.Tab>
-          </Tabs.List>
-
-          <Tabs.Panel value="userProfile">
-            <UserProfile />
-            <UserSaved />
-          </Tabs.Panel>
-          <Tabs.Panel value="userActivity">User Activity tab content sadsad sdsadsddsad</Tabs.Panel>
-          <Tabs.Panel value="settings">
+      <Container size="xl">
+        <UserDashboard active={active} setActive={setActive}>
+          {active === "Profile" ? (
+            <>
+              <UserProfile />
+              <UserSaved />
+            </>
+          ) : active === "Orders" ? (
+            <UserOrders />
+          ) : active === "UserActivity" ? (
+            <UserActivity />
+          ) : active === "Settings" ? (
             <UserSettings />
-          </Tabs.Panel>
-        </Tabs>
+          ) : null}
+        </UserDashboard>
       </Container>
     </Box>
   );

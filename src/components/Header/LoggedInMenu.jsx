@@ -78,7 +78,7 @@ const user = {
   image: "",
 };
 
-export function LoggedInMenu() {
+export default function LoggedInMenu() {
   const { classes, theme, cx } = useStyles();
   const [opened, { toggle }] = useDisclosure(false);
   const [userMenuOpened, setUserMenuOpened] = useState(false);
@@ -118,9 +118,13 @@ export function LoggedInMenu() {
           </Menu.Item>
 
           <Menu.Label>Settings</Menu.Label>
-          <Menu.Item component="div" icon={<IconSettings size="0.9rem" stroke={1.5} />}>
-            <CustomLink href={"/user"}>Account settings</CustomLink>
-          </Menu.Item>
+
+          <CustomLink href={"/user"}>
+            <Menu.Item component="div" icon={<IconSettings size="0.9rem" stroke={1.5} />}>
+              Account settings
+            </Menu.Item>
+          </CustomLink>
+
           <Menu.Item icon={<IconLogout size="0.9rem" stroke={1.5} />}>Logout</Menu.Item>
         </Menu.Dropdown>
       </Menu>
