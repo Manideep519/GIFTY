@@ -11,14 +11,16 @@ import {
   Button,
 } from "@mantine/core";
 import { Link } from "react-router-dom";
-
-export function Register() {
+import axios from "axios";
+export default function Register() {
   const [formData, setFromData] = useState({
     email: "",
     name: "",
     password: "",
     terms: false,
+    isArtist: false,
   });
+
   const [formErrors, setFromErrors] = useState({
     email: "",
     name: "",
@@ -35,6 +37,32 @@ export function Register() {
         [name]: value,
       };
     });
+  }
+
+  async function handleRegister() {
+    try {
+      const result = await axios.post("https://gifty-backend.onrender.com/api/users/register", {
+        userName: formData.name,
+        email: formData.email,
+        password: formData.password,
+        isArtist: formData.isArtist,
+      });
+      console.log(result);
+    } catch (err) {
+      console.log(err.message);
+    }
+  }
+
+  function handleDisabeRegister() {
+    if (formData.email.length === 0) {
+      return true;
+    } else if (formData.name.length === 0) {
+      return true;
+    } else if (formData.password.length < 7) {
+      return true;
+    } else if (!formData.terms) {
+      return true;
+    }
   }
 
   return (
@@ -62,6 +90,7 @@ export function Register() {
               value={formData.name}
               onChange={handleChange}
               radius="md"
+              required
             />
 
             <TextInput
@@ -87,6 +116,16 @@ export function Register() {
             />
             <Checkbox
               name="terms"
+              label="Are you an Artist?"
+              checked={formData.isArtist}
+              onChange={() => {
+                setFromData((prev) => {
+                  return { ...prev, isArtist: !formData.isArtist };
+                });
+              }}
+            />
+            <Checkbox
+              name="terms"
               label="I accept terms and conditions"
               checked={formData.terms}
               onChange={() => {
@@ -95,7 +134,7 @@ export function Register() {
                 });
               }}
             />
-            <Button disabled={!formData.terms} fullWidth mt="xl">
+            <Button onClick={handleRegister} disabled={handleDisabeRegister()} fullWidth mt="xl">
               Register
             </Button>
           </Stack>

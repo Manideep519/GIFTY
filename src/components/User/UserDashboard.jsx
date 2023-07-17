@@ -17,7 +17,10 @@ import {
   IconTruckDelivery,
   IconActivity,
 } from "@tabler/icons-react";
-
+import { useContext } from "react";
+import { UserContext } from "../../context/userContext";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 const useStyles = createStyles((theme) => ({
   header: {
     paddingBottom: theme.spacing.md,
@@ -83,7 +86,8 @@ const data = [
 
 export default function UserDashboard({ children, active, setActive }) {
   const { classes, cx } = useStyles();
-
+  const { updateUserDetails } = useContext(UserContext);
+  const navigate = useNavigate();
   const links = data.map((item) => (
     <Box
       className={cx(classes.link, { [classes.linkActive]: item.label === active })}
@@ -127,7 +131,24 @@ export default function UserDashboard({ children, active, setActive }) {
           </Navbar.Section>
 
           <Navbar.Section className={classes.footer}>
-            <Button variant="default" component="div" className={classes.link}>
+            <Button
+              onClick={() => {
+                updateUserDetails(null);
+                navigate("/");
+                toast.info("Logged out!", {
+                  position: "top-center",
+                  autoClose: 3000,
+                  hideProgressBar: false,
+                  closeOnClick: true,
+                  pauseOnHover: true,
+                  draggable: true,
+                  progress: undefined,
+                });
+              }}
+              variant="default"
+              component="div"
+              className={classes.link}
+            >
               <IconLogout className={classes.linkIcon} stroke={1.5} />
               <span>Logout</span>
             </Button>

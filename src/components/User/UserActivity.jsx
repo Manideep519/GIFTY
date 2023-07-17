@@ -1,4 +1,4 @@
-import { Tabs } from "@mantine/core";
+import { Box, Tabs, Text } from "@mantine/core";
 
 export default function UserActivity() {
   return (
@@ -11,15 +11,45 @@ export default function UserActivity() {
         </Tabs.List>
 
         <Tabs.Panel value="gallery" pt="xs">
-          Liked Posts tab content
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              marginTop: "100px",
+            }}
+          >
+            <Text size={"lg"} c="dimmed">
+              No Data
+            </Text>
+          </Box>
         </Tabs.Panel>
 
         <Tabs.Panel value="messages" pt="xs">
-          Comments tab content
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              marginTop: "100px",
+            }}
+          >
+            <Text size={"lg"} c="dimmed">
+              No Data
+            </Text>
+          </Box>
         </Tabs.Panel>
 
         <Tabs.Panel value="settings" pt="xs">
-          Following tab content
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              marginTop: "100px",
+            }}
+          >
+            <Text size={"lg"} c="dimmed">
+              No Data
+            </Text>
+          </Box>
         </Tabs.Panel>
       </Tabs>
     </>

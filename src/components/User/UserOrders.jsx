@@ -36,12 +36,7 @@ const data = [
 
 export function UserOrders() {
   const rows = data.map((row, index) => (
-    <tr
-      style={{
-        padding: "200px",
-      }}
-      key={index}
-    >
+    <tr key={index}>
       <td>{row.image}</td>
       <td>{row.name}</td>
       <td>{row.price}</td>
@@ -50,10 +45,10 @@ export function UserOrders() {
   ));
 
   return (
-    <Table highlightOnHover withBorder verticalSpacing={"xl"} miw={700}>
+    <Table highlightOnHover withBorder miw={700}>
       <thead>
         <tr>
-          <th>Image</th>
+          <th>Item</th>
           <th>Name</th>
           <th>Price</th>
           <th>Status</th>

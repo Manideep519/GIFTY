@@ -70,7 +70,7 @@ export default function SectionOne() {
                 <div
                   style={{
                     ...imageContainerStyles,
-                    top: "45%",
+                    top: "40%",
                     left: "60%",
                     zIndex: "7",
                   }}

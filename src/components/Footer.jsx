@@ -165,7 +165,7 @@ const data = [
   },
 ];
 
-export function Footer() {
+export default function Footer() {
   const { classes } = useStyles();
 
   const groups = data.map((group) => {
@@ -197,7 +197,7 @@ export function Footer() {
       </Container>
       <Container className={classes.afterFooter} size={"xl"}>
         <Text color="dimmed" size="sm">
-          © 2023 MERA, All rights reserved.
+          © 2023 GIFTY, All rights reserved.
         </Text>
 
         <Group spacing={0} className={classes.social} position="right" noWrap>

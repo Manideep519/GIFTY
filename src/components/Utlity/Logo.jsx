@@ -10,7 +10,7 @@ export default function Logo() {
       underline={false}
       href="/"
     >
-      <Title>MERA</Title>
+      <Title>GIFTY</Title>
     </CustomLink>
   );
 }

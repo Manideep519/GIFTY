@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import {
   createStyles,
   Avatar,
@@ -8,6 +8,7 @@ import {
   Menu,
   Burger,
   rem,
+  Box,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import {
@@ -19,7 +20,9 @@ import {
   IconChevronDown,
 } from "@tabler/icons-react";
 import CustomLink from "../Utlity/CustomLink";
-
+import { UserContext } from "../../context/userContext";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 const useStyles = createStyles((theme) => ({
   user: {
     color: theme.colorScheme === "dark" ? theme.colors.dark[0] : theme.black,
@@ -29,10 +32,6 @@ const useStyles = createStyles((theme) => ({
 
     "&:hover": {
       backgroundColor: theme.colorScheme === "dark" ? theme.colors.dark[8] : theme.white,
-    },
-
-    [theme.fn.smallerThan("xs")]: {
-      display: "none",
     },
   },
 
@@ -47,6 +46,12 @@ const useStyles = createStyles((theme) => ({
   },
 
   tabs: {
+    [theme.fn.smallerThan("sm")]: {
+      display: "none",
+    },
+  },
+
+  hideUserName: {
     [theme.fn.smallerThan("sm")]: {
       display: "none",
     },
@@ -72,21 +77,15 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-const user = {
-  name: "Manideep",
-  email: "manideep@dev.dev",
-  image: "",
-};
-
 export default function LoggedInMenu() {
   const { classes, theme, cx } = useStyles();
-  const [opened, { toggle }] = useDisclosure(false);
   const [userMenuOpened, setUserMenuOpened] = useState(false);
 
+  const { userDetails, updateUserDetails } = useContext(UserContext);
+
+  const navigate = useNavigate();
   return (
     <>
-      <Burger opened={opened} onClick={toggle} className={classes.burger} size="sm" />
-
       <Menu
         width={260}
         position="bottom-end"
@@ -98,10 +97,12 @@ export default function LoggedInMenu() {
         <Menu.Target>
           <UnstyledButton className={cx(classes.user, { [classes.userActive]: userMenuOpened })}>
             <Group spacing={7}>
-              <Avatar src={""} alt={user.name} radius="xl" size={20} />
-              <Text weight={500} size="sm" sx={{ lineHeight: 1 }} mr={3}>
-                {user.name}
-              </Text>
+              <Avatar color="blue" src={""} alt={userDetails.userName} radius="xl" size={30} />
+              <Box className={classes.hideUserName}>
+                <Text weight={500} size="sm" sx={{ lineHeight: 1 }} mr={3}>
+                  {userDetails.userName}
+                </Text>
+              </Box>
               <IconChevronDown size={rem(12)} stroke={1.5} />
             </Group>
           </UnstyledButton>
@@ -125,7 +126,24 @@ export default function LoggedInMenu() {
             </Menu.Item>
           </CustomLink>
 
-          <Menu.Item icon={<IconLogout size="0.9rem" stroke={1.5} />}>Logout</Menu.Item>
+          <Menu.Item
+            onClick={() => {
+              updateUserDetails(null);
+              navigate("/");
+              toast.info("Logged out!", {
+                position: "top-center",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+              });
+            }}
+            icon={<IconLogout size="0.9rem" stroke={1.5} />}
+          >
+            Logout
+          </Menu.Item>
         </Menu.Dropdown>
       </Menu>
     </>

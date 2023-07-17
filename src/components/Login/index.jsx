@@ -10,9 +10,44 @@ import {
   Group,
   Button,
 } from "@mantine/core";
-import { Link } from "react-router-dom";
+import axios from "axios";
+import { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { UserContext } from "../../context/userContext";
+import { toast } from "react-toastify";
 
-export function Login() {
+export default function Login() {
+  const navigate = useNavigate();
+
+  const [loginDetails, setLoginDetails] = useState({
+    email: "",
+    password: "",
+  });
+
+  const { updateUserDetails } = useContext(UserContext);
+
+  async function handleLogin() {
+    try {
+      const result = await axios.post("https://gifty-backend.onrender.com/api/users/login", {
+        email: loginDetails.email,
+        password: loginDetails.password,
+      });
+      updateUserDetails(result.data?.userDetails);
+      navigate("/gallery");
+      toast.success("Successfully logged in", {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    } catch (err) {
+      console.log(err.message);
+    }
+  }
+
   return (
     <Container size={420} my={60}>
       <Title
@@ -28,19 +63,38 @@ export function Login() {
         </Link>
       </Text>
 
-      <Paper withBorder shadow="md" p={30} mt={30} radius="md">
-        <TextInput label="Email" placeholder="you@mantine.dev" required />
-        <PasswordInput label="Password" placeholder="Your password" required mt="md" />
-        <Group position="apart" mt="lg">
-          <Checkbox label="Remember me" />
-          <Anchor component="button" size="sm">
-            Forgot password?
-          </Anchor>
-        </Group>
-        <Button fullWidth mt="xl">
-          Log in
-        </Button>
-      </Paper>
+      <form>
+        <Paper withBorder shadow="md" p={30} mt={30} radius="md">
+          <TextInput
+            value={loginDetails.email}
+            onChange={(event) =>
+              setLoginDetails({ ...loginDetails, email: event.currentTarget.value })
+            }
+            label="Email"
+            placeholder="you@gifty.dev"
+            required
+          />
+          <PasswordInput
+            value={loginDetails.password}
+            onChange={(event) =>
+              setLoginDetails({ ...loginDetails, password: event.currentTarget.value })
+            }
+            label="Password"
+            placeholder="Your password"
+            required
+            mt="md"
+          />
+          <Group position="apart" mt="lg">
+            <Checkbox label="Remember me" />
+            <Anchor component="button" size="sm">
+              Forgot password?
+            </Anchor>
+          </Group>
+          <Button onClick={handleLogin} fullWidth mt="xl">
+            Log in
+          </Button>
+        </Paper>
+      </form>
     </Container>
   );
 }

@@ -15,6 +15,8 @@ import { useDisclosure } from "@mantine/hooks";
 import Logo from "../Utlity/Logo";
 import { Link } from "react-router-dom";
 import LoggedInMenu from "./LoggedInMenu";
+import { useContext } from "react";
+import { UserContext } from "../../context/userContext";
 
 const useStyles = createStyles((theme) => ({
   link: {
@@ -76,9 +78,11 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-export function HeaderMegaMenu() {
+export default function HeaderMenu() {
   const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] = useDisclosure(false);
   const { classes, theme } = useStyles();
+
+  const { userDetails } = useContext(UserContext);
 
   return (
     <Box>
@@ -93,28 +97,46 @@ export function HeaderMegaMenu() {
               <Link to="/about" className={classes.link}>
                 About
               </Link>
-              <Link to="/gallery" className={classes.link}>
-                Gallery
-              </Link>
+              {userDetails && (
+                <Link to="/gallery" className={classes.link}>
+                  Explore
+                </Link>
+              )}
+              {userDetails?.isArtist && (
+                <Link to="/create" className={classes.link}>
+                  Create
+                </Link>
+              )}
             </Group>
 
             <Group className={classes.hiddenMobile}>
-              <Link to={"/login"}>
-                <Button component="div" variant="default">
-                  Login
-                </Button>
-              </Link>
-              <Link to={"/register"}>
-                <Button component="div">Sign up</Button>
-              </Link>
-              <LoggedInMenu />
+              {userDetails ? (
+                <LoggedInMenu />
+              ) : (
+                <>
+                  <Link to={"/login"}>
+                    <Button component="div" variant="default">
+                      Login
+                    </Button>
+                  </Link>
+                  <Link to={"/register"}>
+                    <Button component="div" variant="filled">
+                      Sign up
+                    </Button>
+                  </Link>
+                </>
+              )}
             </Group>
 
-            <Burger
-              opened={drawerOpened}
-              onClick={toggleDrawer}
-              className={classes.hiddenDesktop}
-            />
+            <Group className={classes.hiddenDesktop}>
+              {userDetails && <LoggedInMenu />}
+
+              <Burger
+                opened={drawerOpened}
+                onClick={toggleDrawer}
+                className={classes.hiddenDesktop}
+              />
+            </Group>
           </Group>
         </Container>
       </Header>
@@ -124,32 +146,25 @@ export function HeaderMegaMenu() {
         onClose={closeDrawer}
         size="100%"
         padding="md"
-        title="AppName"
+        title="GIFTY"
         className={classes.hiddenDesktop}
         zIndex={1000000}
       >
         <ScrollArea h={`calc(100vh - ${rem(60)})`} mx="-md">
           <Divider my="sm" color={theme.colorScheme === "dark" ? "dark.5" : "gray.1"} />
-          <a href="#s" className={classes.link}>
+          <Link to="/" className={classes.link}>
             Home
-          </a>
-          <a href="#s" className={classes.link}>
+          </Link>
+          <Link to="/about" className={classes.link}>
             About
-          </a>
-          <a href="#s" className={classes.link}>
-            Gallery
-          </a>
+          </Link>
+          {userDetails && (
+            <Link to="/gallery" className={classes.link}>
+              Explore
+            </Link>
+          )}
 
           <Divider my="sm" color={theme.colorScheme === "dark" ? "dark.5" : "gray.1"} />
-
-          <Group position="center" grow pb="xl" px="md">
-            <Link to={"/login"}>
-              <Button variant="default">Login</Button>
-            </Link>
-            <Link to={"/register"}>
-              <Button>Sign up</Button>
-            </Link>
-          </Group>
         </ScrollArea>
       </Drawer>
     </Box>
