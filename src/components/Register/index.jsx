@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import {
   TextInput,
   PasswordInput,
@@ -10,9 +10,15 @@ import {
   Title,
   Button,
 } from "@mantine/core";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { UserContext } from "../../context/userContext";
+import { toast } from "react-toastify";
+
 export default function Register() {
+  const navigate = useNavigate();
+
+  const { updateUserDetails } = useContext(UserContext);
   const [formData, setFromData] = useState({
     email: "",
     name: "",
@@ -47,7 +53,17 @@ export default function Register() {
         password: formData.password,
         isArtist: formData.isArtist,
       });
-      console.log(result);
+      updateUserDetails(result.data?.userDetails);
+      navigate("/login");
+      toast.success("Registration successful", {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     } catch (err) {
       console.log(err.message);
     }
