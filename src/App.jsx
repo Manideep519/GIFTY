@@ -89,7 +89,7 @@ function App() {
                   />
                 </Routes>
                 <Footer />
-                <button
+                {/* <button
                   onClick={() => {
                     console.log(userDetails);
 
@@ -97,7 +97,7 @@ function App() {
                   }}
                 >
                   asdasdasdsdad
-                </button>
+                </button> */}
                 <CartFloatingButton />
               </CartContext.Provider>
             </ProductContext.Provider>
