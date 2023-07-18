@@ -12,7 +12,7 @@ import {
 } from "@mantine/core";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { UserContext } from "../../context/userContext";
+import { UserContext } from "../../context/UserContext";
 import { toast } from "react-toastify";
 
 export default function Register() {
@@ -54,7 +54,7 @@ export default function Register() {
         isArtist: formData.isArtist,
       });
       updateUserDetails(result.data?.userDetails);
-      navigate("/login");
+      navigate("/login", { replace: true });
       toast.success("Registration successful", {
         position: "top-center",
         autoClose: 3000,

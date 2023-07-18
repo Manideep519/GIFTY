@@ -11,12 +11,13 @@ import {
   rem,
   Container,
 } from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
+import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 import Logo from "../Utlity/Logo";
 import { Link } from "react-router-dom";
 import LoggedInMenu from "./LoggedInMenu";
 import { useContext } from "react";
-import { UserContext } from "../../context/userContext";
+import { UserContext } from "../../context/UserContext";
+import { HeaderSearch } from "../Search";
 
 const useStyles = createStyles((theme) => ({
   link: {
@@ -81,7 +82,7 @@ const useStyles = createStyles((theme) => ({
 export default function HeaderMenu() {
   const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] = useDisclosure(false);
   const { classes, theme } = useStyles();
-
+  const hideSearchBar = useMediaQuery(`(min-width: 870px)`);
   const { userDetails } = useContext(UserContext);
 
   return (
@@ -107,6 +108,7 @@ export default function HeaderMenu() {
                   Create
                 </Link>
               )}
+              {hideSearchBar ? userDetails && <HeaderSearch /> : null}
             </Group>
 
             <Group className={classes.hiddenMobile}>
@@ -161,6 +163,11 @@ export default function HeaderMenu() {
           {userDetails && (
             <Link to="/gallery" className={classes.link}>
               Explore
+            </Link>
+          )}
+          {userDetails?.isArtist && (
+            <Link to="/create" className={classes.link}>
+              Create
             </Link>
           )}
 

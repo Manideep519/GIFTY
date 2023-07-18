@@ -18,7 +18,7 @@ import {
   IconActivity,
 } from "@tabler/icons-react";
 import { useContext } from "react";
-import { UserContext } from "../../context/userContext";
+import { UserContext } from "../../context/UserContext";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 const useStyles = createStyles((theme) => ({
@@ -85,6 +85,20 @@ const data = [
 ];
 
 export default function UserDashboard({ children, active, setActive }) {
+  function handleDashboardLogout() {
+    updateUserDetails(null);
+    navigate("/", { replace: true });
+    toast.info("Logged out!", {
+      position: "top-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  }
+
   const { classes, cx } = useStyles();
   const { updateUserDetails } = useContext(UserContext);
   const navigate = useNavigate();
@@ -132,19 +146,7 @@ export default function UserDashboard({ children, active, setActive }) {
 
           <Navbar.Section className={classes.footer}>
             <Button
-              onClick={() => {
-                updateUserDetails(null);
-                navigate("/");
-                toast.info("Logged out!", {
-                  position: "top-center",
-                  autoClose: 3000,
-                  hideProgressBar: false,
-                  closeOnClick: true,
-                  pauseOnHover: true,
-                  draggable: true,
-                  progress: undefined,
-                });
-              }}
+              onClick={handleDashboardLogout}
               variant="default"
               component="div"
               className={classes.link}

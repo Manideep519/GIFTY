@@ -1,16 +1,5 @@
 import { useContext, useState } from "react";
-import {
-  createStyles,
-  Avatar,
-  UnstyledButton,
-  Group,
-  Text,
-  Menu,
-  Burger,
-  rem,
-  Box,
-} from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
+import { createStyles, Avatar, UnstyledButton, Group, Text, Menu, rem, Box } from "@mantine/core";
 import {
   IconLogout,
   IconHeart,
@@ -18,9 +7,10 @@ import {
   IconMessage,
   IconSettings,
   IconChevronDown,
+  IconTruckDelivery,
 } from "@tabler/icons-react";
 import CustomLink from "../Utlity/CustomLink";
-import { UserContext } from "../../context/userContext";
+import { UserContext } from "../../context/UserContext";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 const useStyles = createStyles((theme) => ({
@@ -108,14 +98,16 @@ export default function LoggedInMenu() {
           </UnstyledButton>
         </Menu.Target>
         <Menu.Dropdown>
-          <Menu.Item icon={<IconHeart size="0.9rem" color={theme.colors.red[6]} stroke={1.5} />}>
+          {/* <Menu.Item icon={<IconHeart size="0.9rem" color={theme.colors.red[6]} stroke={1.5} />}>
             Liked posts
-          </Menu.Item>
+          </Menu.Item> */}
           <Menu.Item icon={<IconStar size="0.9rem" color={theme.colors.yellow[6]} stroke={1.5} />}>
             Saved posts
           </Menu.Item>
-          <Menu.Item icon={<IconMessage size="0.9rem" color={theme.colors.blue[6]} stroke={1.5} />}>
-            Your comments
+          <Menu.Item
+            icon={<IconTruckDelivery size="0.9rem" color={theme.colors.blue[6]} stroke={1.5} />}
+          >
+            Your orders
           </Menu.Item>
 
           <Menu.Label>Settings</Menu.Label>
@@ -129,7 +121,7 @@ export default function LoggedInMenu() {
           <Menu.Item
             onClick={() => {
               updateUserDetails(null);
-              navigate("/");
+              navigate("/", { replace: true });
               toast.info("Logged out!", {
                 position: "top-center",
                 autoClose: 3000,

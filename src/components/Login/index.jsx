@@ -13,8 +13,10 @@ import {
 import axios from "axios";
 import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { UserContext } from "../../context/userContext";
+
 import { toast } from "react-toastify";
+import { UserContext } from "../../context/UserContext";
+import { AuthContext } from "../../context/AuthContext";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -25,15 +27,18 @@ export default function Login() {
   });
 
   const { updateUserDetails } = useContext(UserContext);
+  const { updateAuth } = useContext(AuthContext);
 
   async function handleLogin() {
     try {
-      const result = await axios.post("https://gifty-backend.onrender.com/api/users/login", {
+      const response = await axios.post("https://gifty-backend.onrender.com/api/users/login", {
         email: loginDetails.email,
         password: loginDetails.password,
       });
-      updateUserDetails(result.data?.userDetails);
-      navigate("/gallery");
+      console.log(response);
+      updateAuth(response.data?.token);
+      updateUserDetails(response.data?.userDetails);
+      navigate("/gallery", { replace: true });
       toast.success("Successfully logged in", {
         position: "top-center",
         autoClose: 3000,

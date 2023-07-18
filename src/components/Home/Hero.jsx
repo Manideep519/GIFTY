@@ -1,4 +1,4 @@
-import { Box, Title, Container } from "@mantine/core";
+import { Box, Title, Text, Container } from "@mantine/core";
 
 export default function Hero() {
   return (
@@ -26,13 +26,14 @@ export default function Hero() {
             }}
           >
             Unleash Creativity, Elevate Gifting <br />
-            <Title
+            <Text
               sx={{
                 fontSize: "34px",
+                fontFamily: "'Playfair Display', serif",
               }}
             >
               Discover Unique Custom Gifts with MERA
-            </Title>
+            </Text>
           </Title>
         </Box>
       </Container>

@@ -1,4 +1,4 @@
-import { IconHeart, IconUserPlus, IconJewishStarFilled } from "@tabler/icons-react";
+import { IconHeart, IconUserPlus, IconChecklist } from "@tabler/icons-react";
 import {
   Card,
   Image,
@@ -10,36 +10,10 @@ import {
   createStyles,
   rem,
 } from "@mantine/core";
-
-let data = {
-  image: "gallery/3.jpg",
-  title: "Verudela Beach",
-  country: "Croatia",
-  description:
-    "Completely renovated for the season 2020, Arena Verudela Bech Apartments are fully equipped and modernly furnished 4-star self-service apartments located on the Adriatic coastline by one of the most beautiful beaches in Pula.",
-  badges: [
-    {
-      emoji: "☀️",
-      label: "Sunny weather",
-    },
-    {
-      emoji: "🦓",
-      label: "Onsite zoo",
-    },
-    {
-      emoji: "🌊",
-      label: "Sea",
-    },
-    {
-      emoji: "🌲",
-      label: "Nature",
-    },
-    {
-      emoji: "🤽",
-      label: "Water sports",
-    },
-  ],
-};
+import { useContext, useState } from "react";
+import { CartContext } from "../../context/CartContext";
+import { ProductContext } from "../../context/ProductContext";
+import { toast } from "react-toastify";
 
 const useStyles = createStyles((theme) => ({
   card: {
@@ -67,13 +41,49 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-export function PostCard({ image, title, author, description }) {
-  const { classes, theme } = useStyles();
+export function PostCard({ image, title, author, description, price, index }) {
+  const { classes } = useStyles();
+
+  const { products } = useContext(ProductContext);
+  const { cart, updateCart } = useContext(CartContext);
+
+  function handleAddToCart(index) {
+    const found = cart.some((item) => item.id === index);
+    if (!found) {
+      updateCart([
+        ...cart,
+        {
+          id: index,
+          quantity: 1,
+          product: products[index],
+        },
+      ]);
+      toast.success("Item added to cart!", {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    } else {
+      toast.error("Item already in cart!", {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
+  }
 
   return (
     <Card withBorder radius="md" p="md" className={classes.card}>
       <Card.Section>
-        <Image src={image} alt={title} height={180} />
+        <Image height={250} src={image} alt={title} />
       </Card.Section>
 
       <Card.Section className={classes.section} mt="md">
@@ -92,16 +102,26 @@ export function PostCard({ image, title, author, description }) {
         <Group>
           <div>
             <Text fz="xl" fw={700} sx={{ lineHeight: 1 }}>
-              $168.00
+              ${price}
             </Text>
           </div>
           <Button radius="xl" style={{ flex: 1 }}>
             Buy
           </Button>
+          <Button
+            onClick={() => {
+              handleAddToCart(index);
+            }}
+            variant="outline"
+            radius="xl"
+            style={{ flex: 1 }}
+          >
+            Add to cart
+          </Button>
         </Group>
       </Card.Section>
 
-      <Group
+      {/* <Group
         mt="xs"
         grow
         sx={{
@@ -115,9 +135,9 @@ export function PostCard({ image, title, author, description }) {
           <IconUserPlus size="1.1rem" className={classes.like} stroke={1.5} />
         </ActionIcon>{" "}
         <ActionIcon variant="default" radius="md" size={36}>
-          <IconJewishStarFilled size="1.1rem" className={classes.like} stroke={1.5} />
+          <IconChecklist size="1.1rem" className={classes.like} stroke={1.5} />
         </ActionIcon>
-      </Group>
+      </Group> */}
     </Card>
   );
 }

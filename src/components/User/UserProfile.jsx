@@ -28,15 +28,15 @@ export default function UserProfile() {
           {data.email} • {data.job}
         </Text>
         <Group position="center">
-          <Button variant="default" mt="md">
+          {/* <Button variant="default" mt="md">
             Share
-          </Button>
+          </Button> */}
           <Button variant="default" mt="md">
             Edit profile
           </Button>
-          <Button variant="default" mt="md">
+          {/* <Button variant="default" mt="md">
             Send message
-          </Button>
+          </Button> */}
         </Group>
       </Paper>
     </Box>
