@@ -89,15 +89,7 @@ function App() {
                   />
                 </Routes>
                 <Footer />
-                {/* <button
-                  onClick={() => {
-                    console.log(userDetails);
 
-                    console.log(cart);
-                  }}
-                >
-                  asdasdasdsdad
-                </button> */}
                 <CartFloatingButton />
               </CartContext.Provider>
             </ProductContext.Provider>
