@@ -9,6 +9,7 @@ import {
   Container,
   Group,
   Button,
+  Loader,
 } from "@mantine/core";
 import axios from "axios";
 import { useContext, useState } from "react";
@@ -20,6 +21,7 @@ import { AuthContext } from "../../context/AuthContext";
 
 export default function Login() {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   const [loginDetails, setLoginDetails] = useState({
     email: "",
@@ -30,11 +32,13 @@ export default function Login() {
   const { updateAuth } = useContext(AuthContext);
 
   async function handleLogin() {
+    setLoading(true);
     try {
       const response = await axios.post("https://gifty-backend.onrender.com/api/users/login", {
         email: loginDetails.email,
         password: loginDetails.password,
       });
+      setLoading(false);
       console.log(response);
       updateAuth(response.data?.token);
       updateUserDetails(response.data?.userDetails);
@@ -49,6 +53,7 @@ export default function Login() {
         progress: undefined,
       });
     } catch (err) {
+      setLoading(false);
       console.log(err.message);
     }
   }
@@ -95,8 +100,8 @@ export default function Login() {
               Forgot password?
             </Anchor>
           </Group>
-          <Button onClick={handleLogin} fullWidth mt="xl">
-            Log in
+          <Button disabled={loading} onClick={handleLogin} fullWidth mt="xl">
+            {loading ? <Loader size={"sm"} color="white" /> : "Log in"}
           </Button>
         </Paper>
       </form>

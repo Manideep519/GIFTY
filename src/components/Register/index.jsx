@@ -9,6 +9,7 @@ import {
   Container,
   Title,
   Button,
+  Loader,
 } from "@mantine/core";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -17,7 +18,7 @@ import { toast } from "react-toastify";
 
 export default function Register() {
   const navigate = useNavigate();
-
+  const [loading, setLoading] = useState(false);
   const { updateUserDetails } = useContext(UserContext);
   const [formData, setFromData] = useState({
     email: "",
@@ -36,7 +37,6 @@ export default function Register() {
 
   function handleChange(event) {
     let { name, value } = event.target;
-
     setFromData((prev) => {
       return {
         ...prev,
@@ -46,6 +46,20 @@ export default function Register() {
   }
 
   async function handleRegister() {
+    if (handleDisabeRegister()) {
+      toast.info("Please fill all the required fields", {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      return;
+    }
+
+    setLoading(true);
     try {
       const result = await axios.post("https://gifty-backend.onrender.com/api/users/register", {
         userName: formData.name,
@@ -55,6 +69,7 @@ export default function Register() {
       });
       updateUserDetails(result.data?.userDetails);
       navigate("/login", { replace: true });
+      setLoading(false);
       toast.success("Registration successful", {
         position: "top-center",
         autoClose: 3000,
@@ -64,8 +79,19 @@ export default function Register() {
         draggable: true,
         progress: undefined,
       });
+      console.log(result);
     } catch (err) {
-      console.log(err.message);
+      setLoading(false);
+      toast.error(err.response.data.message, {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      console.log(err.response.data.message);
     }
   }
 
@@ -78,6 +104,8 @@ export default function Register() {
       return true;
     } else if (!formData.terms) {
       return true;
+    } else {
+      return false;
     }
   }
 
@@ -150,8 +178,8 @@ export default function Register() {
                 });
               }}
             />
-            <Button onClick={handleRegister} disabled={handleDisabeRegister()} fullWidth mt="xl">
-              Register
+            <Button onClick={handleRegister} disabled={loading} fullWidth mt="xl">
+              {loading ? <Loader size={"sm"} color="white" /> : "Register"}
             </Button>
           </Stack>
         </form>

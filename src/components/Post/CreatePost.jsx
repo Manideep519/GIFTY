@@ -184,7 +184,7 @@ export default function CreatePost() {
                   required
                 />
 
-                <Button onClick={uploadImage}>
+                <Button disabled={loading} onClick={uploadImage}>
                   {loading ? <Loader size={"sm"} color="white" /> : "Publish"}
                 </Button>
               </Grid.Col>
