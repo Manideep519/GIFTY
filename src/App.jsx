@@ -19,11 +19,15 @@ import CartFloatingButton from "./components/AddToCart/CartFloatingButton";
 import { ProductContext } from "./context/ProductContext";
 import { AuthContext } from "./context/AuthContext";
 import Checkout from "./components/Checkout";
+import axios from "axios";
 function App() {
   const [userDetails, setUserDetails] = useState(null);
   const [cart, setCart] = useState([]);
   const [products, setProducts] = useState([]);
   const [auth, setAuth] = useState("");
+
+  axios.defaults.baseURL = "https://gifty-backend.onrender.com/api";
+  // axios.defaults.baseURL = "http://localhost:3001/api/";
 
   function updateUserDetails(userData) {
     setUserDetails(userData);

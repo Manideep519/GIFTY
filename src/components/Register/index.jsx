@@ -61,7 +61,7 @@ export default function Register() {
 
     setLoading(true);
     try {
-      const result = await axios.post("https://gifty-backend.onrender.com/api/users/register", {
+      const result = await axios.post("/users/register", {
         userName: formData.name,
         email: formData.email,
         password: formData.password,

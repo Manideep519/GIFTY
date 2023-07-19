@@ -34,7 +34,7 @@ export default function Login() {
   async function handleLogin() {
     setLoading(true);
     try {
-      const response = await axios.post("https://gifty-backend.onrender.com/api/users/login", {
+      const response = await axios.post("/users/login", {
         email: loginDetails.email,
         password: loginDetails.password,
       });

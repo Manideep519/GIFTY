@@ -21,7 +21,7 @@ export default function Checkout() {
     });
 
     try {
-      const response = await axios.post("https://gifty-backend.onrender.com/api/orders/create", {
+      const response = await axios.post("/orders/create", {
         productIds: [...productIds],
         userId: userDetails._id,
         orderPlacedAt: getTime(),

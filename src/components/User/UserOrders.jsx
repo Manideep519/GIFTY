@@ -14,7 +14,7 @@ export function UserOrders() {
     setLoading(true);
     let userId = userDetails._id;
     try {
-      const response = await axios.get(`https://gifty-backend.onrender.com/api/orders/${userId}`);
+      const response = await axios.get(`/orders/${userId}`);
       console.log(response.data);
       getAllProductIds(response.data);
     } catch (err) {
@@ -33,7 +33,7 @@ export function UserOrders() {
   async function getProducts(productIds) {
     setLoading(true);
     try {
-      const response = await axios.post("https://gifty-backend.onrender.com/api/posts/arrayOfIds", {
+      const response = await axios.post("/posts/arrayOfIds", {
         arrayOfIds: productIds,
       });
       console.log(response);

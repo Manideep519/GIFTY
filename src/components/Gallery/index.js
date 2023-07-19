@@ -87,7 +87,7 @@ export default function Gallery() {
 
   async function getPosts() {
     try {
-      const response = await axios.get("https://gifty-backend.onrender.com/api/posts/all");
+      const response = await axios.get("/posts/all");
       console.log(response);
       updateProducts(response.data.reverse());
     } catch (err) {

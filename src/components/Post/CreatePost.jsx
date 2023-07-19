@@ -76,7 +76,7 @@ export default function CreatePost() {
 
   async function savePost(imageURL) {
     try {
-      const result = await axios.post("https://gifty-backend.onrender.com/api/posts/create", {
+      const result = await axios.post("/posts/create", {
         artistId: userDetails._id,
         title: postData.title,
         desciption: postData.description,

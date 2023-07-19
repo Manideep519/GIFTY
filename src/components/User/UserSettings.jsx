@@ -29,13 +29,10 @@ export default function UserSettings() {
   async function updateUserDetail() {
     setLoading(true);
     try {
-      const result = await axios.put(
-        `https://gifty-backend.onrender.com/api/users/update/${userDetails._id}`,
-        {
-          userName: userData.name,
-          email: userData.email,
-        }
-      );
+      const result = await axios.put(`/users/update/${userDetails._id}`, {
+        userName: userData.name,
+        email: userData.email,
+      });
       toast.success(
         <Text>
           User updated
