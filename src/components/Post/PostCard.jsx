@@ -14,6 +14,7 @@ import { useContext, useState } from "react";
 import { CartContext } from "../../context/CartContext";
 import { ProductContext } from "../../context/ProductContext";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const useStyles = createStyles((theme) => ({
   card: {
@@ -43,7 +44,7 @@ const useStyles = createStyles((theme) => ({
 
 export function PostCard({ image, title, author, description, price, index }) {
   const { classes } = useStyles();
-
+  const navigate = useNavigate();
   const { products } = useContext(ProductContext);
   const { cart, updateCart } = useContext(CartContext);
 
@@ -80,6 +81,21 @@ export function PostCard({ image, title, author, description, price, index }) {
     }
   }
 
+  function handleBuy(index) {
+    navigate("/checkout");
+    const found = cart.some((item) => item.id === index);
+    if (!found) {
+      updateCart([
+        ...cart,
+        {
+          id: index,
+          quantity: 1,
+          product: products[index],
+        },
+      ]);
+    }
+  }
+
   return (
     <Card withBorder radius="md" p="md" className={classes.card}>
       <Card.Section>
@@ -105,7 +121,13 @@ export function PostCard({ image, title, author, description, price, index }) {
               ${price}
             </Text>
           </div>
-          <Button radius="xl" style={{ flex: 1 }}>
+          <Button
+            onClick={() => {
+              handleBuy(index);
+            }}
+            radius="xl"
+            style={{ flex: 1 }}
+          >
             Buy
           </Button>
           <Button

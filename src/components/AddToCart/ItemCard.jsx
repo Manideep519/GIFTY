@@ -30,7 +30,7 @@ export const ItemCard = ({ title, price, image, id }) => {
           display: "flex",
         }}
       >
-        <Image sx={{ maxWidth: "100px" }} src={image} />
+        <Image width={200} height={100} radius={"md"} src={image} />
         <Flex direction={"column"} px={10}>
           <Text>{title}</Text>
           <Text>${price}</Text>

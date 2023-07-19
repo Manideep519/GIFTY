@@ -68,7 +68,7 @@ export default function Register() {
         isArtist: formData.isArtist,
       });
       updateUserDetails(result.data?.userDetails);
-      navigate("/login", { replace: true });
+      navigate("/login");
       setLoading(false);
       toast.success("Registration successful", {
         position: "top-center",

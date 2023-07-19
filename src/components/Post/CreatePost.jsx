@@ -20,6 +20,7 @@ import { IconSquareRoundedXFilled } from "@tabler/icons-react";
 import { toast } from "react-toastify";
 import { UserContext } from "../../context/UserContext";
 import { AuthContext } from "../../context/AuthContext";
+import { getTime } from "../../utils/time";
 export default function CreatePost() {
   const { userDetails } = useContext(UserContext);
   const { auth } = useContext(AuthContext);
@@ -71,10 +72,6 @@ export default function CreatePost() {
         console.log(err);
         setLoading(false);
       });
-  }
-
-  function getTime() {
-    return new Date().toLocaleDateString();
   }
 
   async function savePost(imageURL) {

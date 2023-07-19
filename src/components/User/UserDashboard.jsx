@@ -87,7 +87,7 @@ const data = [
 export default function UserDashboard({ children, active, setActive }) {
   function handleDashboardLogout() {
     updateUserDetails(null);
-    navigate("/", { replace: true });
+    navigate("/");
     toast.info("Logged out!", {
       position: "top-center",
       autoClose: 3000,

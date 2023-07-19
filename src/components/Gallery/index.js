@@ -90,7 +90,6 @@ export default function Gallery() {
       const response = await axios.get("https://gifty-backend.onrender.com/api/posts/all");
       console.log(response);
       updateProducts(response.data.reverse());
-      // updateProducts(productsData.concat(response.data).reverse());
     } catch (err) {
       console.log(err.message);
     }

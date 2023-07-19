@@ -121,7 +121,7 @@ export default function LoggedInMenu() {
           <Menu.Item
             onClick={() => {
               updateUserDetails(null);
-              navigate("/", { replace: true });
+              navigate("/");
               toast.info("Logged out!", {
                 position: "top-center",
                 autoClose: 3000,

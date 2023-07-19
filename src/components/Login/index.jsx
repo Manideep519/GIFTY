@@ -42,7 +42,7 @@ export default function Login() {
       console.log(response);
       updateAuth(response.data?.token);
       updateUserDetails(response.data?.userDetails);
-      navigate("/gallery", { replace: true });
+      navigate("/gallery");
       toast.success("Successfully logged in", {
         position: "top-center",
         autoClose: 3000,

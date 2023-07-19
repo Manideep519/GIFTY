@@ -1,4 +1,6 @@
 import { Avatar, Text, Button, Group, Paper, Box } from "@mantine/core";
+import { useContext } from "react";
+import { UserContext } from "../../context/UserContext";
 
 const data = {
   avatar: "",
@@ -8,6 +10,8 @@ const data = {
 };
 
 export default function UserProfile() {
+  const { userDetails } = useContext(UserContext);
+
   return (
     <Box
       sx={{
@@ -22,10 +26,10 @@ export default function UserProfile() {
       >
         <Avatar src={data.avatar} size={120} radius={120} mx="auto" />
         <Text ta="center" fz="lg" weight={500} mt="md">
-          {data.name}
+          {userDetails.userName}
         </Text>
         <Text ta="center" c="dimmed" fz="sm">
-          {data.email} • {data.job}
+          {userDetails.email}
         </Text>
         <Group position="center">
           {/* <Button variant="default" mt="md">

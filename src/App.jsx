@@ -18,6 +18,7 @@ import { CartContext } from "./context/CartContext";
 import CartFloatingButton from "./components/AddToCart/CartFloatingButton";
 import { ProductContext } from "./context/ProductContext";
 import { AuthContext } from "./context/AuthContext";
+import Checkout from "./components/Checkout";
 function App() {
   const [userDetails, setUserDetails] = useState(null);
   const [cart, setCart] = useState([]);
@@ -84,6 +85,14 @@ function App() {
                     element={
                       <ProtectedRoute isLoggedIn={userDetails}>
                         <CreatePost />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/checkout"
+                    element={
+                      <ProtectedRoute isLoggedIn={userDetails}>
+                        <Checkout />
                       </ProtectedRoute>
                     }
                   />
