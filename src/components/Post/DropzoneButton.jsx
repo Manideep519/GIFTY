@@ -36,7 +36,6 @@ export function DropzoneButton({ files, setFiles }) {
       <Dropzone
         openRef={openRef}
         onDrop={(files) => {
-          console.log(files);
           setFiles(files);
         }}
         className={classes.dropzone}

@@ -16,7 +16,6 @@ export default function UserSaved() {
     try {
       let userId = userDetails._id;
       const response = await axios.get(`/posts/${userId}`);
-      console.log(response.data);
       setCreatedPosts(response.data.posts);
       setLoading(false);
     } catch (err) {

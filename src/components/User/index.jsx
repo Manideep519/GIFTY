@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext } from "react";
 import { Box, Container } from "@mantine/core";
 import UserProfile from "./UserProfile";
 import UserSaved from "./UserSaved";
@@ -6,9 +6,10 @@ import UserSettings from "./UserSettings";
 import UserDashboard from "./UserDashboard";
 import UserActivity from "./UserActivity";
 import { UserOrders } from "./UserOrders";
+import { DashboardContext } from "../../context/DashboardContext";
 
 export default function User() {
-  const [active, setActive] = useState("Profile");
+  const { active, setActive } = useContext(DashboardContext);
 
   return (
     <Box>

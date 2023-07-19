@@ -20,12 +20,13 @@ import { ProductContext } from "./context/ProductContext";
 import { AuthContext } from "./context/AuthContext";
 import Checkout from "./components/Checkout";
 import axios from "axios";
+import { DashboardContext } from "./context/DashboardContext";
 function App() {
   const [userDetails, setUserDetails] = useState(null);
   const [cart, setCart] = useState([]);
   const [products, setProducts] = useState([]);
   const [auth, setAuth] = useState("");
-
+  const [active, setActive] = useState("Profile");
   axios.defaults.baseURL = "https://gifty-backend.onrender.com/api";
   // axios.defaults.baseURL = "http://localhost:3001/api/";
 
@@ -62,47 +63,48 @@ function App() {
           <UserContext.Provider value={{ userDetails, updateUserDetails }}>
             <ProductContext.Provider value={{ products, updateProducts }}>
               <CartContext.Provider value={{ cart, updateCart }}>
-                <HeaderMenu />
-                <Routes>
-                  <Route path="/" element={<Home />} />
-                  <Route path="/about" element={<About />} />
-                  <Route path="/login" element={<Login />} />
-                  <Route path="/register" element={<Register />} />
-                  <Route
-                    path="/gallery"
-                    element={
-                      <ProtectedRoute isLoggedIn={userDetails}>
-                        <Post />
-                      </ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path="/user"
-                    element={
-                      <ProtectedRoute isLoggedIn={userDetails}>
-                        <User />
-                      </ProtectedRoute>
-                    }
-                  />{" "}
-                  <Route
-                    path="/create"
-                    element={
-                      <ProtectedRoute isLoggedIn={userDetails}>
-                        <CreatePost />
-                      </ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path="/checkout"
-                    element={
-                      <ProtectedRoute isLoggedIn={userDetails}>
-                        <Checkout />
-                      </ProtectedRoute>
-                    }
-                  />
-                </Routes>
-                <Footer />
-
+                <DashboardContext.Provider value={{ active, setActive }}>
+                  <HeaderMenu />
+                  <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/about" element={<About />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/register" element={<Register />} />
+                    <Route
+                      path="/gallery"
+                      element={
+                        <ProtectedRoute isLoggedIn={userDetails}>
+                          <Post />
+                        </ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="/user"
+                      element={
+                        <ProtectedRoute isLoggedIn={userDetails}>
+                          <User />
+                        </ProtectedRoute>
+                      }
+                    />{" "}
+                    <Route
+                      path="/create"
+                      element={
+                        <ProtectedRoute isLoggedIn={userDetails}>
+                          <CreatePost />
+                        </ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="/checkout"
+                      element={
+                        <ProtectedRoute isLoggedIn={userDetails}>
+                          <Checkout />
+                        </ProtectedRoute>
+                      }
+                    />
+                  </Routes>
+                  <Footer />
+                </DashboardContext.Provider>
                 <CartFloatingButton />
               </CartContext.Provider>
             </ProductContext.Provider>

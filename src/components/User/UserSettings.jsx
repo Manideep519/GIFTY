@@ -53,7 +53,6 @@ export default function UserSettings() {
       );
       setLoading(false);
       updateUserDetails(result.data.userDetails);
-      console.log(result.data.userDetails);
     } catch (err) {
       console.log(err.message);
       setLoading(false);

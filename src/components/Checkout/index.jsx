@@ -7,11 +7,13 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import { UserContext } from "../../context/UserContext";
 import { getTime } from "../../utils/time";
+import { useNavigate } from "react-router-dom";
 
 export default function Checkout() {
   const { cart, updateCart } = useContext(CartContext);
   const { userDetails } = useContext(UserContext);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   async function handlePlaceOrder() {
     setLoading(true);
@@ -27,7 +29,7 @@ export default function Checkout() {
         orderPlacedAt: getTime(),
       });
       setLoading(false);
-      console.log(response);
+
       toast.success("Order placed successfully.", {
         position: "top-center",
         autoClose: 3000,
@@ -37,10 +39,11 @@ export default function Checkout() {
         draggable: true,
         progress: undefined,
       });
-      // updateCart([]);
+      navigate("/gallery");
+      updateCart([]);
     } catch (err) {
       setLoading(false);
-      console.log(err.response.data.message);
+
       toast.error("An error occured!", {
         position: "top-center",
         autoClose: 3000,

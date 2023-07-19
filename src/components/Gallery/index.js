@@ -88,7 +88,7 @@ export default function Gallery() {
   async function getPosts() {
     try {
       const response = await axios.get("/posts/all");
-      console.log(response);
+
       updateProducts(response.data.reverse());
     } catch (err) {
       console.log(err.message);

@@ -13,6 +13,7 @@ import CustomLink from "../Utlity/CustomLink";
 import { UserContext } from "../../context/UserContext";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { DashboardContext } from "../../context/DashboardContext";
 const useStyles = createStyles((theme) => ({
   user: {
     color: theme.colorScheme === "dark" ? theme.colors.dark[0] : theme.black,
@@ -72,6 +73,7 @@ export default function LoggedInMenu() {
   const [userMenuOpened, setUserMenuOpened] = useState(false);
 
   const { userDetails, updateUserDetails } = useContext(UserContext);
+  const { setActive } = useContext(DashboardContext);
 
   const navigate = useNavigate();
   return (
@@ -101,10 +103,20 @@ export default function LoggedInMenu() {
           {/* <Menu.Item icon={<IconHeart size="0.9rem" color={theme.colors.red[6]} stroke={1.5} />}>
             Liked posts
           </Menu.Item> */}
-          <Menu.Item icon={<IconStar size="0.9rem" color={theme.colors.yellow[6]} stroke={1.5} />}>
+          <Menu.Item
+            onClick={() => {
+              setActive("Profile");
+              navigate("/user");
+            }}
+            icon={<IconStar size="0.9rem" color={theme.colors.yellow[6]} stroke={1.5} />}
+          >
             Saved posts
           </Menu.Item>
           <Menu.Item
+            onClick={() => {
+              setActive("Orders");
+              navigate("/user");
+            }}
             icon={<IconTruckDelivery size="0.9rem" color={theme.colors.blue[6]} stroke={1.5} />}
           >
             Your orders

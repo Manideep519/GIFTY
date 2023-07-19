@@ -39,7 +39,6 @@ export default function Login() {
         password: loginDetails.password,
       });
       setLoading(false);
-      console.log(response);
       updateAuth(response.data?.token);
       updateUserDetails(response.data?.userDetails);
       navigate("/gallery");

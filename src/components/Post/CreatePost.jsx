@@ -96,7 +96,6 @@ export default function CreatePost() {
         progress: undefined,
       });
       setLoading(false);
-      console.log(result);
     } catch (err) {
       console.log(err.message);
       setLoading(false);

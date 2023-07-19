@@ -13,9 +13,9 @@ import {
 } from "@mantine/core";
 import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 import Logo from "../Utlity/Logo";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import LoggedInMenu from "./LoggedInMenu";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { UserContext } from "../../context/UserContext";
 import { HeaderSearch } from "../Search";
 
@@ -41,6 +41,10 @@ const useStyles = createStyles((theme) => ({
     ...theme.fn.hover({
       backgroundColor: theme.colorScheme === "dark" ? theme.colors.dark[6] : theme.colors.gray[0],
     }),
+  },
+
+  hightLight: {
+    borderBottom: `2px solid ${theme.colors.blue[7]} !important`,
   },
 
   subLink: {
@@ -85,6 +89,8 @@ export default function HeaderMenu() {
   const hideSearchBar = useMediaQuery(`(min-width: 870px)`);
   const { userDetails } = useContext(UserContext);
 
+  const [activeLink, setActiveLink] = useState("home");
+
   return (
     <Box>
       <Header height={60} px="md">
@@ -92,21 +98,49 @@ export default function HeaderMenu() {
           <Group position="apart" sx={{ height: "100%" }}>
             <Logo />
             <Group sx={{ height: "100%" }} spacing={0} className={classes.hiddenMobile}>
-              <Link to="/" className={classes.link}>
+              <NavLink
+                onClick={() => {
+                  setActiveLink("home");
+                }}
+                to="/"
+                className={`${classes.link} ${activeLink === "home" ? classes.hightLight : null}`}
+              >
                 Home
-              </Link>
-              <Link to="/about" className={classes.link}>
+              </NavLink>
+              <NavLink
+                onClick={() => {
+                  setActiveLink("about");
+                }}
+                to="/about"
+                className={`${classes.link} ${activeLink === "about" ? classes.hightLight : null}`}
+              >
                 About
-              </Link>
+              </NavLink>
               {userDetails && (
-                <Link to="/gallery" className={classes.link}>
+                <NavLink
+                  onClick={() => {
+                    setActiveLink("explore");
+                  }}
+                  to="/gallery"
+                  className={`${classes.link} ${
+                    activeLink === "explore" ? classes.hightLight : null
+                  }`}
+                >
                   Explore
-                </Link>
+                </NavLink>
               )}
               {userDetails?.isArtist && (
-                <Link to="/create" className={classes.link}>
+                <NavLink
+                  onClick={() => {
+                    setActiveLink("create");
+                  }}
+                  to="/create"
+                  className={`${classes.link} ${
+                    activeLink === "create" ? classes.hightLight : null
+                  }`}
+                >
                   Create
-                </Link>
+                </NavLink>
               )}
               {hideSearchBar ? userDetails && <HeaderSearch /> : null}
             </Group>

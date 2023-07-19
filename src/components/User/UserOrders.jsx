@@ -15,7 +15,6 @@ export function UserOrders() {
     let userId = userDetails._id;
     try {
       const response = await axios.get(`/orders/${userId}`);
-      console.log(response.data);
       getAllProductIds(response.data);
     } catch (err) {
       console.log(err.message);
@@ -36,7 +35,6 @@ export function UserOrders() {
       const response = await axios.post("/posts/arrayOfIds", {
         arrayOfIds: productIds,
       });
-      console.log(response);
       setProductsData(response.data.posts.reverse());
       setLoading(false);
     } catch (err) {
