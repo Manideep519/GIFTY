@@ -27,7 +27,7 @@ function App() {
   const [products, setProducts] = useState([]);
   const [auth, setAuth] = useState("");
   const [active, setActive] = useState("Profile");
-  axios.defaults.baseURL = "https://gifty-backend-latest.onrender.com";
+  axios.defaults.baseURL = "https://gifty-backend-latest.onrender.com/api/";
   // axios.defaults.baseURL = "http://localhost:3001/api/";
 
   function updateUserDetails(userData) {
